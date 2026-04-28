@@ -270,7 +270,7 @@
                     <!-- Terminal Log -->
                     <div class="archive-log font-mono text-[0.6rem] md:text-xs text-gray-400 bg-white/5 border border-white/10 p-4 rounded-sm inline-block opacity-0">
                         <div class="log-line">> Scanning deployed modules...</div>
-                        <div class="log-line text-neonCyan">> 3 systems detected</div>
+                        <div class="log-line text-neonCyan">> 4 systems detected</div>
                         <div class="log-line">> Archive status: <span class="text-hotPink animate-pulse">online</span></div>
                     </div>
                 </div>
@@ -279,7 +279,105 @@
                 <div class="relative w-full flex flex-col gap-16 md:gap-32" id="archive-container">
                     
                     <!-- Connection Line (Desktop Only) -->
-                    <div class="connection-line hidden md:block absolute top-[15%] bottom-[15%] left-1/2 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent -translate-x-1/2 z-0 opacity-0"></div>
+                    <div class="connection-line hidden md:block absolute top-[10%] bottom-[15%] left-1/2 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent -translate-x-1/2 z-0 opacity-0"></div>
+
+                    <!-- Project Featured: OrbitFlow -->
+                    <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[95%] md:self-center relative z-10">
+                        <!-- Scanline -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-10 w-full animate-[scan_4s_ease-in-out_infinite] opacity-50 pointer-events-none rounded-lg z-20"></div>
+                        
+                        <a href="https://orbitflow-teal.vercel.app/" target="_blank" rel="noopener noreferrer" class="work-link relative block w-full group overflow-hidden bg-[rgba(15,23,42,0.65)] backdrop-blur-2xl border-2 border-neonCyan/40 hover:border-neonCyan transition-all duration-500 hover:shadow-[0_0_50px_rgba(0,255,198,0.25)] p-6 md:p-12 cursor-pointer rounded-lg">
+                            
+                            <!-- Featured Label -->
+                            <div class="absolute top-0 right-0 bg-neonCyan text-bgDeep text-[0.6rem] md:text-xs font-bold px-4 py-1.5 tracking-widest uppercase rounded-bl-lg z-30 shadow-[0_0_15px_rgba(0,255,198,0.5)]">
+                                FEATURED PROJECT
+                            </div>
+
+                            <!-- Glows -->
+                            <div class="absolute top-0 right-0 w-80 h-80 bg-neonCyan/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/4 group-hover:bg-neonCyan/30 transition-colors duration-500"></div>
+                            <div class="absolute bottom-0 left-0 w-80 h-80 bg-electricViolet/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/4 group-hover:bg-electricViolet/30 transition-colors duration-500"></div>
+                            
+                            <div class="flex flex-col relative z-10 w-full">
+                                <!-- Top Bar -->
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-white/20 pb-4">
+                                    <div class="system-label inline-block text-[0.6rem] md:text-[0.65rem] text-neonCyan tracking-[0.2em] uppercase font-bold px-3 py-1.5 border border-neonCyan/40 bg-transparent shadow-[0_0_10px_rgba(0,255,198,0.2)] group-hover:shadow-[0_0_15px_rgba(0,255,198,0.5)] group-hover:bg-neonCyan/10 transition-all duration-300">
+                                        [ SAAS SYSTEM ]
+                                    </div>
+                                    <div class="archive-id font-mono text-[0.6rem] md:text-xs text-neonCyan tracking-widest uppercase">
+                                        SYS-004 // SAAS
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <h3 class="text-3xl md:text-5xl font-bold mb-2 group-hover:text-neonCyan transition-colors duration-300 relative inline-block group-hover:drop-shadow-[0_0_10px_rgba(0,255,198,0.5)]">
+                                    OrbitFlow — Gravity Task Manager
+                                </h3>
+                                <div class="text-neonCyan font-mono text-[0.65rem] md:text-sm tracking-widest mb-6 opacity-90 uppercase">"A task manager that moves with your momentum."</div>
+
+                                <p class="font-thin text-sm md:text-base opacity-80 mb-8 max-w-3xl leading-relaxed">
+                                    OrbitFlow adalah aplikasi SaaS task manager modern dengan pendekatan unik berbasis physics (gravity-inspired interaction). Project ini dirancang untuk menghadirkan pengalaman berbeda dari task manager biasa dengan menggabungkan UI premium, interaksi dinamis, dan konsep visual yang terinspirasi dari dunia fisika.
+                                </p>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <div class="text-electricViolet text-[0.65rem] font-bold tracking-widest uppercase mb-4 border-b border-white/10 pb-2">CORE FEATURES</div>
+                                        <ul class="font-thin text-[0.75rem] md:text-sm opacity-80 space-y-3 list-disc pl-4 marker:text-neonCyan">
+                                            <li><strong class="text-white opacity-100">Gravity Mode:</strong> Elemen UI jatuh dan berinteraksi menggunakan physics engine.</li>
+                                            <li><strong class="text-white opacity-100">Black Hole Delete:</strong> Hapus task dengan animasi tersedot ke dalam void.</li>
+                                            <li><strong class="text-white opacity-100">Interactive Kanban:</strong> Drag & drop dengan animasi smooth dan responsif.</li>
+                                            <li><strong class="text-white opacity-100">Deadline Orbit:</strong> Task divisualisasikan seperti planet yang mengorbit.</li>
+                                            <li><strong class="text-white opacity-100">Modern Dashboard:</strong> Analytics terintegrasi menggunakan Recharts.</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <div class="text-electricViolet text-[0.65rem] font-bold tracking-widest uppercase mb-4 border-b border-white/10 pb-2">TECH STACK</div>
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Next.js</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">TypeScript</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Tailwind CSS</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Zustand</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Framer Motion</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Matter.js</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">dnd-kit</span>
+                                        </div>
+
+                                        <div class="border border-hotPink/40 bg-hotPink/10 p-4 rounded-sm relative overflow-hidden group/notice">
+                                            <div class="absolute inset-0 bg-hotPink/5 translate-y-full group-hover/notice:translate-y-0 transition-transform duration-300"></div>
+                                            <div class="relative z-10">
+                                                <div class="text-hotPink text-[0.65rem] font-bold tracking-widest uppercase mb-2 flex items-center gap-2">
+                                                    <span class="w-1.5 h-1.5 bg-hotPink rounded-full animate-pulse"></span>
+                                                    IN PROGRESS STATUS
+                                                </div>
+                                                <div class="font-thin text-[0.7rem] text-white/90 leading-relaxed">
+                                                    Project ini masih dalam tahap pengembangan. Saat ini menggunakan data lokal (demo mode) dan belum terhubung ke database. Ke depannya akan diintegrasikan dengan Supabase untuk backend.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bottom Bar -->
+                                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 w-full mt-auto pt-6 border-t border-white/10">
+                                    <div class="flex flex-col gap-2 font-mono text-[0.6rem] md:text-xs text-gray-400">
+                                        <div class="flex gap-2"><span class="text-gray-600">HIGHLIGHT:</span> <span class="text-white max-w-sm">Advanced frontend engineering & cinematic animations.</span></div>
+                                        <div class="status-label flex items-center gap-2 font-bold tracking-widest text-hotPink drop-shadow-[0_0_5px_rgba(255,61,110,0.5)] mt-1">
+                                            <span class="text-gray-600 font-normal">STATUS:</span>
+                                            <span class="w-1.5 h-1.5 rounded-full bg-hotPink shadow-[0_0_5px_#FF3D6E] animate-pulse"></span>
+                                            IN DEVELOPMENT
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Button -->
+                                    <div class="flex gap-4 z-20">
+                                        <div class="open-system-btn flex items-center gap-3 text-xs tracking-widest uppercase font-bold text-bgDeep bg-neonCyan px-6 py-3 hover:bg-white transition-all duration-300 shadow-[0_0_15px_rgba(0,255,198,0.3)] hover:shadow-[0_0_25px_rgba(0,255,198,0.6)] rounded-sm">
+                                            <span>LIVE DEMO</span>
+                                            <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
 
                     <!-- Project 1: Game -->
                     <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-start relative z-10">
