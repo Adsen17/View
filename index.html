@@ -215,10 +215,10 @@
         
         <!-- HALAMAN 1: CORE HUB -->
         <section id="hub" class="page-section items-center justify-center">
-            <div class="text-center mt-32 md:mt-0 pointer-events-none relative z-20">
-                <h2 class="font-bold text-4xl md:text-6xl lg:text-7xl tracking-tighter uppercase mix-blend-overlay opacity-40">Aditya<br>Sendana</h2>
-                <p class="font-thin text-[0.65rem] md:text-sm mt-6 tracking-widest text-goldAccent">BEYOND PORTFOLIO. BUILDING A DIGITAL LEGACY.</p>
-                <p class="font-thin text-[0.6rem] md:text-xs mt-4 tracking-widest text-neonCyan max-w-lg mx-auto opacity-70">This is not a portfolio.<br>This is a system. A representation of my evolution, my work, and the future I am building.</p>
+            <div class="text-center mt-24 md:mt-0 pointer-events-none relative z-20">
+                <h2 class="font-bold text-3xl sm:text-4xl md:text-6xl lg:text-7xl tracking-widest md:tracking-tighter uppercase mix-blend-overlay opacity-40 leading-tight md:leading-none">Aditya<br>Sendana</h2>
+                <p class="font-thin text-[0.55rem] md:text-sm mt-4 md:mt-6 tracking-widest text-goldAccent px-4">BEYOND PORTFOLIO.<br class="block sm:hidden"> BUILDING A DIGITAL LEGACY.</p>
+                <p class="font-thin text-[0.55rem] md:text-xs mt-3 md:mt-4 tracking-widest text-neonCyan max-w-[260px] md:max-w-lg mx-auto opacity-70">This is not a portfolio.<br>This is a system. A representation of my evolution, my work, and the future I am building.</p>
             </div>
         </section>
 
@@ -253,44 +253,132 @@
         </section>
 
         <!-- HALAMAN 3: WORKS -->
-        <section id="works" class="page-section pt-32 min-h-screen relative overflow-hidden">
-            <div class="max-w-5xl mx-auto w-full relative z-20 px-4 md:px-8 mt-12 md:mt-16">
-                <div class="text-xs tracking-widest text-goldAccent mb-10 w-full text-left">SYS.REQ // MEMORY_FRAGMENTS</div>
-                <div class="w-full flex flex-col items-center gap-6 md:gap-8" id="works-grid">
-                    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                        <div class="work-fragment w-full glass-panel p-6 cursor-pointer hover-target group hover:-translate-y-2 transition-transform border-l-neonCyan" data-work="1">
-                            <div class="text-[0.6rem] text-neonCyan mb-4">MEM.FRAG_001</div>
-                            <h4 class="font-bold text-xl mb-2">Smart Dashboard System</h4>
-                            <p class="font-thin text-xs opacity-60">Laravel, JavaScript, WebSocket</p>
-                        </div>
-                        <div class="work-fragment w-full glass-panel p-6 cursor-pointer hover-target group hover:-translate-y-2 transition-transform border-l-electricViolet" data-work="2">
-                            <div class="text-[0.6rem] text-electricViolet mb-4">MEM.FRAG_002</div>
-                            <h4 class="font-bold text-xl mb-2">Portfolio Experience System</h4>
-                            <p class="font-thin text-xs opacity-60">Laravel, GSAP, Tailwind CSS</p>
-                        </div>
-                        <div class="work-fragment w-full glass-panel p-6 cursor-pointer hover-target group hover:-translate-y-2 transition-transform border-l-hotPink" data-work="3">
-                            <div class="text-[0.6rem] text-hotPink mb-4">MEM.FRAG_003</div>
-                            <h4 class="font-bold text-xl mb-2">Task Automation Platform</h4>
-                            <p class="font-thin text-xs opacity-60">Laravel, API Integration</p>
-                        </div>
-                        <div class="work-fragment w-full glass-panel p-6 cursor-pointer hover-target group hover:-translate-y-2 transition-transform border-l-goldAccent" data-work="4">
-                            <div class="text-[0.6rem] text-goldAccent mb-4">MEM.FRAG_004</div>
-                            <h4 class="font-bold text-xl mb-2">Interactive UI Prototype</h4>
-                            <p class="font-thin text-xs opacity-60">JavaScript, GSAP, CSS</p>
-                        </div>
+        <!-- HALAMAN 3: WORKS (SYSTEM ARCHIVE) -->
+        <section id="works" class="page-section pt-32 pb-48 min-h-screen relative overflow-hidden">
+            <!-- Background grids/glows -->
+            <div class="absolute inset-0 bg-[linear-gradient(rgba(0,255,198,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,198,0.02)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_70%_70%_at_50%_50%,#000_10%,transparent_100%)] pointer-events-none opacity-50 z-0"></div>
+            <!-- Subtle noise -->
+            <div class="absolute inset-0 opacity-[0.03] pointer-events-none z-0" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
+            
+            <div class="max-w-6xl mx-auto w-full relative z-20 px-4 md:px-8 mt-4 md:mt-8">
+                
+                <!-- Title & Subtitle -->
+                <div class="mb-16 md:mb-24 relative max-w-2xl">
+                    <h2 class="archive-title font-bold text-4xl md:text-6xl tracking-tighter uppercase text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] mb-6 opacity-0">SYSTEM ARCHIVE</h2>
+                    <p class="archive-subtitle font-thin text-sm md:text-base opacity-70 leading-relaxed text-neonCyan mb-8 opacity-0">A collection of deployed systems, experiments, and digital creations built as fragments of my future legacy.</p>
+                    
+                    <!-- Terminal Log -->
+                    <div class="archive-log font-mono text-[0.6rem] md:text-xs text-gray-400 bg-white/5 border border-white/10 p-4 rounded-sm inline-block opacity-0">
+                        <div class="log-line">> Scanning deployed modules...</div>
+                        <div class="log-line text-neonCyan">> 2 systems detected</div>
+                        <div class="log-line">> Archive status: <span class="text-hotPink animate-pulse">online</span></div>
                     </div>
                 </div>
-            </div>
+                
+                <!-- Archive Modules Container (Asymmetric Layout) -->
+                <div class="relative w-full flex flex-col gap-16 md:gap-32" id="archive-container">
+                    
+                    <!-- Connection Line (Desktop Only) -->
+                    <div class="connection-line hidden md:block absolute top-[15%] bottom-[15%] left-1/2 w-[1px] bg-gradient-to-b from-transparent via-white/20 to-transparent -translate-x-1/2 z-0 opacity-0"></div>
 
-            <!-- Modal Detail Karya (Sudah diperbaiki agar teks orbit tidak menabrak) -->
-            <div id="work-detail" class="fixed inset-0 z-[999] bg-bgBase/95 backdrop-blur-xl hidden flex-col justify-center items-start p-8 md:p-32 opacity-0">
-                <button id="close-work" class="absolute top-6 right-6 md:top-10 md:right-10 font-bold text-[0.65rem] md:text-xs tracking-[0.2em] uppercase text-neonCyan hover-target cursor-pointer z-50 transition-all">[ CLOSE ]</button>
-                <div class="text-xs text-neonCyan mb-4" id="detail-tag">MEM.FRAG_XXX</div>
-                <h2 class="font-bold text-4xl md:text-7xl mb-12" id="detail-title">Title</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl font-thin text-sm">
-                    <div><div class="text-electricViolet mb-2 uppercase">Problem</div><p class="opacity-70" id="detail-prob">-</p></div>
-                    <div><div class="text-goldAccent mb-2 uppercase">System Design</div><p class="opacity-70" id="detail-sys">-</p></div>
-                    <div><div class="text-neonCyan mb-2 uppercase">Impact</div><p class="opacity-70" id="detail-imp">-</p></div>
+                    <!-- Project 1: Game -->
+                    <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-start relative z-10">
+                        <!-- Scanline -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-10 w-full animate-[scan_4s_ease-in-out_infinite] opacity-50 pointer-events-none rounded-lg z-20"></div>
+                        
+                        <a href="https://keiferr.itch.io/pirate-platformer-adventure" target="_blank" rel="noopener noreferrer" class="work-link relative block w-full group overflow-hidden bg-[rgba(15,23,42,0.55)] backdrop-blur-xl border border-white/10 hover:border-hotPink/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,61,110,0.15)] p-6 md:p-10 cursor-pointer rounded-lg">
+                            <!-- Glows -->
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-hotPink/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/4 group-hover:bg-hotPink/20 transition-colors duration-500"></div>
+                            <div class="absolute bottom-0 left-0 w-64 h-64 bg-electricViolet/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/4 group-hover:bg-electricViolet/20 transition-colors duration-500"></div>
+                            
+                            <div class="flex flex-col relative z-10 w-full">
+                                <!-- Top Bar -->
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-white/10 pb-4">
+                                    <div class="system-label inline-block text-[0.6rem] md:text-[0.65rem] text-hotPink tracking-[0.2em] uppercase font-bold px-3 py-1.5 border border-hotPink/40 bg-transparent shadow-[0_0_10px_rgba(255,61,110,0.2)] group-hover:shadow-[0_0_15px_rgba(255,61,110,0.5)] group-hover:bg-hotPink/10 transition-all duration-300">
+                                        [ GAME SYSTEM ]
+                                    </div>
+                                    <div class="archive-id font-mono text-[0.6rem] md:text-xs text-gray-500 tracking-widest uppercase">
+                                        SYS-001 // GAME
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <h3 class="text-3xl md:text-5xl font-bold mb-4 group-hover:text-hotPink transition-colors duration-300 relative inline-block group-hover:drop-shadow-[0_0_8px_rgba(255,61,110,0.5)]">
+                                    Pirate Platformer Adventure
+                                </h3>
+                                <p class="font-thin text-sm md:text-base opacity-70 mb-8 max-w-2xl leading-relaxed">A pirate-themed platformer adventure game built to explore gameplay mechanics, level design, movement systems, and interactive player experience.</p>
+                                
+                                <!-- Bottom Bar -->
+                                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 w-full mt-auto">
+                                    <div class="flex flex-col gap-2 font-mono text-[0.6rem] md:text-xs text-gray-400">
+                                        <div class="flex gap-2"><span class="text-gray-600">TYPE:</span> <span class="text-white">Game Development</span></div>
+                                        <div class="flex gap-2"><span class="text-gray-600">PLATFORM:</span> <span class="text-white">itch.io</span></div>
+                                        <div class="status-label flex items-center gap-2 font-bold tracking-widest text-electricViolet drop-shadow-[0_0_5px_rgba(138,92,255,0.5)] mt-1">
+                                            <span class="text-gray-600 font-normal">STATUS:</span>
+                                            <span class="w-1.5 h-1.5 rounded-full bg-electricViolet shadow-[0_0_5px_#8A5CFF] glow-stable"></span>
+                                            DEPLOYED
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Button -->
+                                    <div class="open-system-btn flex items-center gap-3 text-xs tracking-widest uppercase font-bold text-white group-hover:text-hotPink transition-all duration-300">
+                                        <span class="border-b border-transparent group-hover:border-hotPink pb-1 transition-all">OPEN SYSTEM</span>
+                                        <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Project 2: Web -->
+                    <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-end relative z-10">
+                        <!-- Scanline -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-10 w-full animate-[scan_4s_ease-in-out_infinite_1s] opacity-50 pointer-events-none rounded-lg z-20"></div>
+                        
+                        <a href="https://adsen17.github.io/portfolio-keifer/" target="_blank" rel="noopener noreferrer" class="work-link relative block w-full group overflow-hidden bg-[rgba(15,23,42,0.55)] backdrop-blur-xl border border-white/10 hover:border-neonCyan/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(0,255,198,0.15)] p-6 md:p-10 cursor-pointer rounded-lg">
+                            <!-- Glows -->
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-neonCyan/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/4 group-hover:bg-neonCyan/20 transition-colors duration-500"></div>
+                            <div class="absolute bottom-0 left-0 w-64 h-64 bg-electricViolet/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/4 group-hover:bg-electricViolet/20 transition-colors duration-500"></div>
+                            
+                            <div class="flex flex-col relative z-10 w-full">
+                                <!-- Top Bar -->
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-white/10 pb-4">
+                                    <div class="system-label inline-block text-[0.6rem] md:text-[0.65rem] text-neonCyan tracking-[0.2em] uppercase font-bold px-3 py-1.5 border border-neonCyan/40 bg-transparent shadow-[0_0_10px_rgba(0,255,198,0.2)] group-hover:shadow-[0_0_15px_rgba(0,255,198,0.5)] group-hover:bg-neonCyan/10 transition-all duration-300">
+                                        [ WEB SYSTEM ]
+                                    </div>
+                                    <div class="archive-id font-mono text-[0.6rem] md:text-xs text-gray-500 tracking-widest uppercase">
+                                        SYS-002 // WEB
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <h3 class="text-3xl md:text-5xl font-bold mb-4 group-hover:text-neonCyan transition-colors duration-300 relative inline-block group-hover:drop-shadow-[0_0_8px_rgba(0,255,198,0.5)]">
+                                    Personal Portfolio Website
+                                </h3>
+                                <p class="font-thin text-sm md:text-base opacity-70 mb-8 max-w-2xl leading-relaxed">A personal portfolio website designed to showcase digital identity, creative direction, projects, and development skills through a responsive web experience.</p>
+                                
+                                <!-- Bottom Bar -->
+                                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 w-full mt-auto">
+                                    <div class="flex flex-col gap-2 font-mono text-[0.6rem] md:text-xs text-gray-400">
+                                        <div class="flex gap-2"><span class="text-gray-600">TYPE:</span> <span class="text-white">Web Development</span></div>
+                                        <div class="flex gap-2"><span class="text-gray-600">PLATFORM:</span> <span class="text-white">GitHub Pages</span></div>
+                                        <div class="status-label flex items-center gap-2 font-bold tracking-widest text-neonCyan drop-shadow-[0_0_5px_rgba(0,255,198,0.5)] mt-1">
+                                            <span class="text-gray-600 font-normal">STATUS:</span>
+                                            <span class="w-1.5 h-1.5 rounded-full bg-neonCyan shadow-[0_0_5px_#00FFC6] animate-pulse"></span>
+                                            ACTIVE
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Button -->
+                                    <div class="open-system-btn flex items-center gap-3 text-xs tracking-widest uppercase font-bold text-white group-hover:text-neonCyan transition-all duration-300">
+                                        <span class="border-b border-transparent group-hover:border-neonCyan pb-1 transition-all">OPEN SYSTEM</span>
+                                        <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -512,6 +600,9 @@
                 sec.classList.remove('active');
                 gsap.set(sec, {opacity: 0, y: 20});
             });
+            // Reset works elements explicitly for repeated entry animations
+            gsap.set('.archive-title, .archive-subtitle, .archive-log, .connection-line', {opacity: 0, y: 0});
+            gsap.set('.archive-module', {opacity: 0, y: 30, scale: 0.95});
 
             const activeSec = document.getElementById(hash);
             activeSec.classList.add('active');
@@ -537,7 +628,17 @@
                 if(n.getAttribute('href') === `#${hash}`) n.classList.add('active-nav');
             });
 
-            if(hash === 'works') gsap.to(baseCamera, {z: 8, x: 0, duration: 1.5});
+            if(hash === 'works') {
+                gsap.to(baseCamera, {z: 8, x: 0, duration: 1.5});
+                
+                const tl = gsap.timeline({delay: 0.5});
+                tl.to('.archive-title', {opacity: 1, duration: 0.3, onStart: triggerGlitch})
+                  .to('.archive-subtitle', {opacity: 1, duration: 0.5}, "-=0.1")
+                  .to('.archive-log', {opacity: 1, duration: 0.3})
+                  .fromTo('.log-line', {opacity: 0, x: -10}, {opacity: 1, x: 0, duration: 0.2, stagger: 0.2})
+                  .to('.connection-line', {opacity: 1, duration: 0.5}, "+=0.2")
+                  .to('.archive-module', {opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.3, ease: 'power3.out'}, "-=0.3");
+            }
             else if(hash === 'about') gsap.to(baseCamera, {z: 12, x: 2, duration: 1});
             else gsap.to(baseCamera, {z: 15, x: 0, duration: 1.5});
 
@@ -563,8 +664,8 @@
             const isMobile = window.innerWidth < 768;
             
             // Menggunakan bentuk elips (Radius X lebih lebar dari Radius Y)
-            const radiusX = isMobile ? 140 : Math.min(420, window.innerWidth / 2 - 60);
-            const radiusY = isMobile ? 160 : Math.min(260, window.innerHeight / 2 - 50);
+            const radiusX = isMobile ? 145 : Math.min(420, window.innerWidth / 2 - 60);
+            const radiusY = isMobile ? 220 : Math.min(260, window.innerHeight / 2 - 50);
             
             let html = `<a href="#hub" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border border-white/40 hover-target z-50 pointer-events-auto transition-transform hover:scale-150 hover:bg-neonCyan shadow-[0_0_15px_rgba(0,255,198,0.3)]"></a>`;
             
@@ -723,45 +824,29 @@
             }
         });
 
-        // --- 6. MODAL WORKS (FIXED NAV OVERLAP) ---
-        const worksData = {
-            "1": { t: "Smart Dashboard System", p: "Monitoring data across multiple sources was inefficient and slow.", s: "Built an interactive dashboard system using Laravel and real-time data updates.", i: "Improved efficiency and reduced monitoring time significantly." },
-            "2": { t: "Portfolio Experience System", p: "Traditional portfolios fail to engage users.", s: "Developed an immersive portfolio system with interactive UI and animation.", i: "Increased user engagement and improved personal branding." },
-            "3": { t: "Task Automation Platform", p: "Manual workflows caused inefficiency and delays.", s: "Created a system to automate repetitive digital tasks.", i: "Reduced workload and improved productivity." },
-            "4": { t: "Interactive UI Prototype", p: "Static UI lacks engagement.", s: "Designed experimental UI with motion and interaction.", i: "Enhanced user experience and visual appeal." }
-        };
-        
-        document.querySelectorAll('.work-fragment').forEach(el => {
-            el.addEventListener('click', () => {
-                const id = el.dataset.work;
-                document.getElementById('detail-title').innerText = worksData[id].t;
-                document.getElementById('detail-prob').innerText = worksData[id].p;
-                document.getElementById('detail-sys').innerText = worksData[id].s;
-                document.getElementById('detail-imp').innerText = worksData[id].i;
-                
-                const modal = document.getElementById('work-detail');
-                const nav = document.getElementById('nav-system'); // Select Nav System
-                
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                
-                // HIDE NAV ORBIT SAAT MODAL DIBUKA (Menghindari tabrakan teks)
-                gsap.to(nav, {opacity: 0, duration: 0.3, pointerEvents: 'none'}); 
-                gsap.to('#back-to-hub', {opacity: 0, duration: 0.3, pointerEvents: 'none'}); // Sembunyikan tombol return to hub
-                gsap.fromTo(modal, {opacity:0, scale:0.9}, {opacity:1, scale:1, duration:0.3});
+        // --- 6. INTERACTIVE WORKS LINKS ---
+        document.querySelectorAll('.work-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if (typeof sounds !== 'undefined' && sounds.type) sounds.type();
+                gsap.to(link, {scale: 1.02, duration: 0.3, ease: 'power2.out'});
             });
-        });
-        
-        document.getElementById('close-work').addEventListener('click', () => {
-            const modal = document.getElementById('work-detail');
-            
-            // MUNCULKAN KEMBALI BACK TO HUB
-            gsap.to('#back-to-hub', {opacity: 1, duration: 0.3, pointerEvents: 'auto'});
-            
-            gsap.to(modal, {opacity:0, scale:0.9, duration:0.2, onComplete: () => {
-                modal.classList.remove('flex');
-                modal.classList.add('hidden');
-            }});
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, {scale: 1, duration: 0.3, ease: 'power2.out'});
+            });
+            link.addEventListener('click', (e) => {
+                if (typeof sounds !== 'undefined' && sounds.success) {
+                    sounds.success(); // Suara sukses saat diklik
+                }
+                
+                // Efek flash sekilas sebelum tab baru terbuka
+                const flash = document.createElement('div');
+                flash.className = 'absolute inset-0 bg-white opacity-30 pointer-events-none z-50 mix-blend-overlay';
+                link.appendChild(flash);
+                
+                gsap.timeline()
+                    .to(link, {x: -2, duration: 0.05, yoyo: true, repeat: 3})
+                    .to(flash, {opacity: 0, duration: 0.5, onComplete: () => flash.remove()}, "+=0.1");
+            });
         });
 
         // --- 7. UX TAMBAHAN ---

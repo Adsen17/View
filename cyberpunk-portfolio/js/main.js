@@ -92,6 +92,9 @@
                 sec.classList.remove('active');
                 gsap.set(sec, {opacity: 0, y: 20});
             });
+            // Reset works elements explicitly for repeated entry animations
+            gsap.set('.archive-title, .archive-subtitle, .archive-log, .connection-line', {opacity: 0, y: 0});
+            gsap.set('.archive-module', {opacity: 0, y: 30, scale: 0.95});
 
             const activeSec = document.getElementById(hash);
             activeSec.classList.add('active');
@@ -117,7 +120,17 @@
                 if(n.getAttribute('href') === `#${hash}`) n.classList.add('active-nav');
             });
 
-            if(hash === 'works') gsap.to(baseCamera, {z: 8, x: 0, duration: 1.5});
+            if(hash === 'works') {
+                gsap.to(baseCamera, {z: 8, x: 0, duration: 1.5});
+                
+                const tl = gsap.timeline({delay: 0.5});
+                tl.to('.archive-title', {opacity: 1, duration: 0.3, onStart: triggerGlitch})
+                  .to('.archive-subtitle', {opacity: 1, duration: 0.5}, "-=0.1")
+                  .to('.archive-log', {opacity: 1, duration: 0.3})
+                  .fromTo('.log-line', {opacity: 0, x: -10}, {opacity: 1, x: 0, duration: 0.2, stagger: 0.2})
+                  .to('.connection-line', {opacity: 1, duration: 0.5}, "+=0.2")
+                  .to('.archive-module', {opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.3, ease: 'power3.out'}, "-=0.3");
+            }
             else if(hash === 'about') gsap.to(baseCamera, {z: 12, x: 2, duration: 1});
             else gsap.to(baseCamera, {z: 15, x: 0, duration: 1.5});
 
@@ -143,8 +156,8 @@
             const isMobile = window.innerWidth < 768;
             
             // Menggunakan bentuk elips (Radius X lebih lebar dari Radius Y)
-            const radiusX = isMobile ? 140 : Math.min(420, window.innerWidth / 2 - 60);
-            const radiusY = isMobile ? 160 : Math.min(260, window.innerHeight / 2 - 50);
+            const radiusX = isMobile ? 145 : Math.min(420, window.innerWidth / 2 - 60);
+            const radiusY = isMobile ? 220 : Math.min(260, window.innerHeight / 2 - 50);
             
             let html = `<a href="#hub" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full border border-white/40 hover-target z-50 pointer-events-auto transition-transform hover:scale-150 hover:bg-neonCyan shadow-[0_0_15px_rgba(0,255,198,0.3)]"></a>`;
             
@@ -303,45 +316,29 @@
             }
         });
 
-        // --- 6. MODAL WORKS (FIXED NAV OVERLAP) ---
-        const worksData = {
-            "1": { t: "Smart Dashboard System", p: "Monitoring data across multiple sources was inefficient and slow.", s: "Built an interactive dashboard system using Laravel and real-time data updates.", i: "Improved efficiency and reduced monitoring time significantly." },
-            "2": { t: "Portfolio Experience System", p: "Traditional portfolios fail to engage users.", s: "Developed an immersive portfolio system with interactive UI and animation.", i: "Increased user engagement and improved personal branding." },
-            "3": { t: "Task Automation Platform", p: "Manual workflows caused inefficiency and delays.", s: "Created a system to automate repetitive digital tasks.", i: "Reduced workload and improved productivity." },
-            "4": { t: "Interactive UI Prototype", p: "Static UI lacks engagement.", s: "Designed experimental UI with motion and interaction.", i: "Enhanced user experience and visual appeal." }
-        };
-        
-        document.querySelectorAll('.work-fragment').forEach(el => {
-            el.addEventListener('click', () => {
-                const id = el.dataset.work;
-                document.getElementById('detail-title').innerText = worksData[id].t;
-                document.getElementById('detail-prob').innerText = worksData[id].p;
-                document.getElementById('detail-sys').innerText = worksData[id].s;
-                document.getElementById('detail-imp').innerText = worksData[id].i;
-                
-                const modal = document.getElementById('work-detail');
-                const nav = document.getElementById('nav-system'); // Select Nav System
-                
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-                
-                // HIDE NAV ORBIT SAAT MODAL DIBUKA (Menghindari tabrakan teks)
-                gsap.to(nav, {opacity: 0, duration: 0.3, pointerEvents: 'none'}); 
-                gsap.to('#back-to-hub', {opacity: 0, duration: 0.3, pointerEvents: 'none'}); // Sembunyikan tombol return to hub
-                gsap.fromTo(modal, {opacity:0, scale:0.9}, {opacity:1, scale:1, duration:0.3});
+        // --- 6. INTERACTIVE WORKS LINKS ---
+        document.querySelectorAll('.work-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if (typeof sounds !== 'undefined' && sounds.type) sounds.type();
+                gsap.to(link, {scale: 1.02, duration: 0.3, ease: 'power2.out'});
             });
-        });
-        
-        document.getElementById('close-work').addEventListener('click', () => {
-            const modal = document.getElementById('work-detail');
-            
-            // MUNCULKAN KEMBALI BACK TO HUB
-            gsap.to('#back-to-hub', {opacity: 1, duration: 0.3, pointerEvents: 'auto'});
-            
-            gsap.to(modal, {opacity:0, scale:0.9, duration:0.2, onComplete: () => {
-                modal.classList.remove('flex');
-                modal.classList.add('hidden');
-            }});
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, {scale: 1, duration: 0.3, ease: 'power2.out'});
+            });
+            link.addEventListener('click', (e) => {
+                if (typeof sounds !== 'undefined' && sounds.success) {
+                    sounds.success(); // Suara sukses saat diklik
+                }
+                
+                // Efek flash sekilas sebelum tab baru terbuka
+                const flash = document.createElement('div');
+                flash.className = 'absolute inset-0 bg-white opacity-30 pointer-events-none z-50 mix-blend-overlay';
+                link.appendChild(flash);
+                
+                gsap.timeline()
+                    .to(link, {x: -2, duration: 0.05, yoyo: true, repeat: 3})
+                    .to(flash, {opacity: 0, duration: 0.5, onComplete: () => flash.remove()}, "+=0.1");
+            });
         });
 
         // --- 7. UX TAMBAHAN ---
