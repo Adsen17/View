@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aditya Sendana | Futuristic Systems Developer</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bgBase: 'var(--color-bg)',
+                        bgDeep: '#0F172A',
+                        neonCyan: 'var(--color-primary)',
+                        electricViolet: 'var(--color-secondary)',
+                        hotPink: 'var(--color-accent)',
+                        goldAccent: 'var(--color-highlight)',
+                    },
+                    fontFamily: {
+                        thin: ['Space Mono', 'monospace'],
+                        bold: ['Syncopate', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Core Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-thin text-white antialiased mode-human">
+
+    <div id="cursor"></div>
+    <div class="glitch-layer" id="glitch-effect"></div>
+
+    <!-- Boot Sequence -->
+    <div id="boot-screen" class="fixed inset-0 z-[9999] bg-bgBase flex flex-col justify-end p-8 md:p-16">
+        <div id="boot-text" class="text-neonCyan font-thin text-sm md:text-lg opacity-80 leading-relaxed max-w-2xl">
+            <span class="typing-line block"></span>
+        </div>
+    </div>
+
+    <div id="canvas-container"></div>
+
+    <!-- Persistent UI -->
+    <div class="fixed top-6 left-6 md:top-10 md:left-10 z-[100] mix-blend-screen">
+        <a href="#hub" class="font-bold text-xs md:text-sm tracking-[0.2em] uppercase opacity-50 hover:opacity-100 hover:text-neonCyan transition-all pointer-events-auto hover-target block">Aditya<br>Sendana</a>
+        <div class="text-[0.6rem] font-thin mt-2 text-neonCyan pointer-events-none" id="system-status">SYS.ON // BOOTING...</div>
+    </div>
+
+    <!-- Global Back Button -->
+    <a href="#hub" id="back-to-hub" class="fixed top-6 right-6 md:top-10 md:right-10 z-[100] font-bold text-[0.65rem] md:text-xs tracking-[0.2em] uppercase text-hotPink hover-target transition-all pointer-events-auto opacity-0 hidden">
+        [ RETURN TO HUB ]
+    </a>
+
+    <div class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] flex gap-4 font-thin text-xs opacity-60">
+        <button class="mode-btn hover-target transition-all text-neonCyan drop-shadow-[0_0_8px_rgba(0,255,198,0.8)]" data-mode="human">[ HUMAN ]</button>
+        <button class="mode-btn hover-target transition-all" data-mode="system">[ SYSTEM ]</button>
+        <button class="mode-btn hover-target transition-all" data-mode="future">[ FUTURE ]</button>
+    </div>
+
+    <!-- Navigasi Orbit -->
+    <nav id="nav-system" class="fixed inset-0 z-50 hidden pointer-events-none">
+    </nav>
+
+    <!-- ROUTING PAGES -->
+    <main id="main-content" class="relative z-10 w-full min-h-screen">
+        
+        <!-- HALAMAN 1: CORE HUB -->
+        <section id="hub" class="page-section items-center justify-center">
+            <div class="text-center mt-32 md:mt-0 pointer-events-none relative z-20">
+                <h2 class="font-bold text-4xl md:text-6xl lg:text-7xl tracking-tighter uppercase mix-blend-overlay opacity-40">Aditya<br>Sendana</h2>
+                <p class="font-thin text-[0.65rem] md:text-sm mt-6 tracking-widest text-goldAccent">BEYOND PORTFOLIO. BUILDING A DIGITAL LEGACY.</p>
+                <p class="font-thin text-[0.6rem] md:text-xs mt-4 tracking-widest text-neonCyan max-w-lg mx-auto opacity-70">This is not a portfolio.<br>This is a system. A representation of my evolution, my work, and the future I am building.</p>
+            </div>
+        </section>
+
+        <!-- HALAMAN 2: ABOUT -->
+        <section id="about" class="page-section pt-32 pb-32">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+                <div class="lg:col-span-5 glass-panel p-8 md:p-12 relative overflow-hidden group">
+                    <div class="text-xs tracking-widest text-neonCyan mb-8">SYS.REQ // CORE_IDENTITY</div>
+                    <h3 class="font-bold text-3xl md:text-5xl mb-6 leading-tight">Futuristic Systems<br>Developer.</h3>
+                    <p class="font-thin text-sm md:text-base opacity-70 leading-relaxed mb-8">
+                        I am a developer focused on creating systems rather than just applications.<br><br>My approach is rooted in thinking beyond immediate solutions—designing architectures that can evolve, adapt, and remain relevant in the future.<br><br>I believe technology should not only solve problems today, but also shape possibilities for tomorrow.
+                    </p>
+                    <div class="space-y-4 font-thin text-xs uppercase tracking-wider">
+                        <div class="flex items-center gap-4"><span class="w-8 h-[1px] bg-electricViolet"></span> Think Long-Term</div>
+                        <div class="flex items-center gap-4"><span class="w-8 h-[1px] bg-hotPink"></span> Build With Purpose</div>
+                        <div class="flex items-center gap-4"><span class="w-8 h-[1px] bg-goldAccent"></span> Design For Impact</div>
+                        <div class="flex items-center gap-4"><span class="w-8 h-[1px] bg-neonCyan"></span> Continuously Evolve</div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 flex flex-col gap-8">
+                    <div class="glass-panel p-8">
+                        <div class="text-xs tracking-widest text-electricViolet mb-6">SYS.REQ // MODULES</div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-thin text-sm">
+                            <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors"><strong class="text-neonCyan">Web Architecture</strong><br>Designing scalable and structured backend systems.</div>
+                            <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors"><strong class="text-electricViolet">Interactive UI Systems</strong><br>Creating immersive and engaging user experiences.</div>
+                            <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors"><strong class="text-hotPink">Backend Engineering</strong><br>Building efficient and reliable server-side logic.</div>
+                            <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors"><strong class="text-goldAccent">AI & Future Tech</strong><br>Exploring intelligent systems and automation.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN 3: WORKS -->
+        <section id="works" class="page-section pt-32 min-h-screen relative overflow-hidden">
+            <div class="max-w-5xl mx-auto w-full relative z-20 px-4 md:px-8 mt-12 md:mt-16">
+                <div class="text-xs tracking-widest text-goldAccent mb-10 w-full text-left">SYS.REQ // MEMORY_FRAGMENTS</div>
+                <div class="w-full flex flex-col items-center gap-6 md:gap-8" id="works-grid">
+                    <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                        <div class="work-fragment w-full glass-panel p-6 cursor-pointer hover-target group hover:-translate-y-2 transition-transform border-l-neonCyan" data-work="1">
+                            <div class="text-[0.6rem] text-neonCyan mb-4">MEM.FRAG_001</div>
+                            <h4 class="font-bold text-xl mb-2">Smart Dashboard System</h4>
+                            <p class="font-thin text-xs opacity-60">Laravel, JavaScript, WebSocket</p>
+                        </div>
+                        <div class="work-fragment w-full glass-panel p-6 cursor-pointer hover-target group hover:-translate-y-2 transition-transform border-l-electricViolet" data-work="2">
+                            <div class="text-[0.6rem] text-electricViolet mb-4">MEM.FRAG_002</div>
+                            <h4 class="font-bold text-xl mb-2">Portfolio Experience System</h4>
+                            <p class="font-thin text-xs opacity-60">Laravel, GSAP, Tailwind CSS</p>
+                        </div>
+                        <div class="work-fragment w-full glass-panel p-6 cursor-pointer hover-target group hover:-translate-y-2 transition-transform border-l-hotPink" data-work="3">
+                            <div class="text-[0.6rem] text-hotPink mb-4">MEM.FRAG_003</div>
+                            <h4 class="font-bold text-xl mb-2">Task Automation Platform</h4>
+                            <p class="font-thin text-xs opacity-60">Laravel, API Integration</p>
+                        </div>
+                        <div class="work-fragment w-full glass-panel p-6 cursor-pointer hover-target group hover:-translate-y-2 transition-transform border-l-goldAccent" data-work="4">
+                            <div class="text-[0.6rem] text-goldAccent mb-4">MEM.FRAG_004</div>
+                            <h4 class="font-bold text-xl mb-2">Interactive UI Prototype</h4>
+                            <p class="font-thin text-xs opacity-60">JavaScript, GSAP, CSS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Detail Karya (Sudah diperbaiki agar teks orbit tidak menabrak) -->
+            <div id="work-detail" class="fixed inset-0 z-[999] bg-bgBase/95 backdrop-blur-xl hidden flex-col justify-center items-start p-8 md:p-32 opacity-0">
+                <button id="close-work" class="absolute top-6 right-6 md:top-10 md:right-10 font-bold text-[0.65rem] md:text-xs tracking-[0.2em] uppercase text-neonCyan hover-target cursor-pointer z-50 transition-all">[ CLOSE ]</button>
+                <div class="text-xs text-neonCyan mb-4" id="detail-tag">MEM.FRAG_XXX</div>
+                <h2 class="font-bold text-4xl md:text-7xl mb-12" id="detail-title">Title</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-6xl font-thin text-sm">
+                    <div><div class="text-electricViolet mb-2 uppercase">Problem</div><p class="opacity-70" id="detail-prob">-</p></div>
+                    <div><div class="text-goldAccent mb-2 uppercase">System Design</div><p class="opacity-70" id="detail-sys">-</p></div>
+                    <div><div class="text-neonCyan mb-2 uppercase">Impact</div><p class="opacity-70" id="detail-imp">-</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN 4: LEGACY -->
+        <section id="legacy" class="page-section pt-32 pb-64 relative">
+            <div class="max-w-4xl mx-auto w-full relative z-10 px-4">
+                <h2 class="font-bold text-4xl md:text-7xl mb-20 tracking-tighter mix-blend-overlay">Timeline.</h2>
+                <div class="border-l border-white/10 ml-2 md:ml-10 space-y-20 relative">
+                    <div class="relative pl-8 md:pl-20 timeline-node">
+                        <div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-neonCyan shadow-[0_0_10px_#00FFC6]"></div>
+                        <div class="text-neonCyan font-bold text-xl md:text-2xl mb-2">2026</div>
+                        <div class="font-thin text-xs md:text-sm opacity-70">Building scalable digital systems.</div>
+                    </div>
+                    <div class="relative pl-8 md:pl-20 timeline-node">
+                        <div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-electricViolet shadow-[0_0_10px_#8A5CFF]"></div>
+                        <div class="text-electricViolet font-bold text-xl md:text-2xl mb-2">2028</div>
+                        <div class="font-thin text-xs md:text-sm opacity-70">Expanding impact through technology.</div>
+                    </div>
+                    <div class="relative pl-8 md:pl-20 timeline-node">
+                        <div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-hotPink shadow-[0_0_10px_#FF3D6E]"></div>
+                        <div class="text-hotPink font-bold text-xl md:text-2xl mb-2">2032</div>
+                        <div class="font-thin text-xs md:text-sm opacity-70">Leading innovative system development.</div>
+                    </div>
+                    <div class="relative pl-8 md:pl-20 timeline-node">
+                        <div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-goldAccent shadow-[0_0_10px_#FFD166]"></div>
+                        <div class="text-goldAccent font-bold text-xl md:text-2xl mb-2">2035</div>
+                        <div class="font-thin text-xs md:text-sm opacity-70">Creating intelligent platforms.</div>
+                    </div>
+                    <div class="relative pl-8 md:pl-20 timeline-node">
+                        <div class="absolute left-[-5px] top-2 w-2 h-2 rounded-full bg-neonCyan shadow-[0_0_10px_#00FFC6]"></div>
+                        <div class="text-neonCyan font-bold text-xl md:text-2xl mb-2">2040</div>
+                        <div class="font-thin text-xs md:text-sm opacity-70">Leaving a lasting digital legacy.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN 5: CONTACT -->
+        <section id="contact" class="page-section items-center justify-center min-h-screen relative overflow-hidden">
+            <!-- Background elements -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20 pointer-events-none"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neonCyan/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen"></div>
+
+            <div class="w-full max-w-3xl relative mx-4 z-10" id="terminal-panel">
+                <!-- Premium Glass Panel -->
+                <div class="glass-panel p-6 md:p-10 relative overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/5 before:to-transparent before:pointer-events-none">
+                    
+                    <!-- Scanline Overlay -->
+                    <div class="absolute inset-0 pointer-events-none bg-[linear-gradient(to_bottom,transparent_50%,rgba(0,0,0,0.1)_51%)] bg-[length:100%_4px] opacity-20"></div>
+                    
+                    <!-- Neon Edge -->
+                    <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-neonCyan via-electricViolet to-hotPink" id="terminal-top-edge"></div>
+                    
+                    <!-- Header -->
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 relative z-20 border-b border-white/10 pb-4">
+                        <div>
+                            <div class="text-[0.65rem] md:text-xs tracking-[0.3em] text-neonCyan uppercase drop-shadow-[0_0_8px_rgba(0,255,198,0.5)] flex items-center gap-2 font-bold">
+                                <span class="w-2 h-2 bg-neonCyan rounded-full animate-pulse"></span>
+                                SECURE CONNECTION NODE // ACTIVE
+                            </div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 text-[0.5rem] md:text-[0.55rem] tracking-widest uppercase font-bold">
+                            <span class="px-2 py-1 border border-white/10 bg-white/5 text-gray-400">ENCRYPTED</span>
+                            <span class="px-2 py-1 border border-white/10 bg-white/5 text-electricViolet">LOW LATENCY</span>
+                            <button id="sound-toggle" type="button" class="hover-target px-2 py-1 border border-white/10 bg-white/5 text-hotPink hover:bg-white/10 transition-colors pointer-events-auto cursor-pointer flex items-center gap-1">
+                                [ SOUND: <span id="sound-status">ON</span> ]
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="terminal-output" class="font-thin text-xs md:text-sm space-y-2 mb-6 opacity-90 h-28 overflow-y-auto pr-2 relative z-20 scrollbar-hide">
+                        <div class="text-electricViolet">> Establish connection to Developer.</div>
+                        <div class="text-gray-400">> Awaiting transmission...</div>
+                    </div>
+                    
+                    <!-- Real HTML Form -->
+                    <form action="https://formspree.io/f/xzdylozo" method="POST" id="contact-form" class="space-y-6 pt-4 pointer-events-auto relative z-20">
+                        
+                        <!-- Formspree Hidden Fields -->
+                        <input type="hidden" name="_subject" value="New Signal from Portfolio">
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="relative group">
+                                <label class="text-[0.6rem] md:text-[0.65rem] text-electricViolet opacity-70 mb-2 block uppercase tracking-[0.2em]">> Enter Name:</label>
+                                <div class="flex items-center gap-3 border-b border-white/10 pb-2 group-focus-within:border-neonCyan transition-colors">
+                                    <span class="text-hotPink font-bold">></span>
+                                    <input type="text" name="name" required class="terminal-input hover-target pointer-events-auto w-full" placeholder="John Doe">
+                                </div>
+                            </div>
+                            <div class="relative group">
+                                <label class="text-[0.6rem] md:text-[0.65rem] text-electricViolet opacity-70 mb-2 block uppercase tracking-[0.2em]">> Enter Email:</label>
+                                <div class="flex items-center gap-3 border-b border-white/10 pb-2 group-focus-within:border-neonCyan transition-colors">
+                                    <span class="text-hotPink font-bold">></span>
+                                    <input type="email" name="email" required class="terminal-input hover-target pointer-events-auto w-full" placeholder="signal@domain.com">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="relative group">
+                            <label class="text-[0.6rem] md:text-[0.65rem] text-electricViolet opacity-70 mb-2 block uppercase tracking-[0.2em]">> Enter Message:</label>
+                            <div class="flex items-start gap-3 border-b border-white/10 pb-2 group-focus-within:border-neonCyan transition-colors">
+                                <span class="text-hotPink font-bold pt-1">></span>
+                                <textarea name="message" rows="3" required class="terminal-input hover-target pointer-events-auto w-full resize-none" placeholder="Type transmission here..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4 flex flex-col md:flex-row justify-between items-center gap-4">
+                            <!-- Real Contact info -->
+                            <div class="text-[0.55rem] md:text-[0.65rem] text-gray-500 flex flex-wrap justify-center md:justify-start gap-4 font-thin uppercase tracking-widest pointer-events-auto">
+                                <a href="mailto:Keiferr17@gmail.com" class="hover-target hover:text-neonCyan transition-colors">SYS.MAIL: Keiferr17@gmail.com</a>
+                                <a href="https://github.com/Adsen17" target="_blank" class="hover-target hover:text-neonCyan transition-colors">GITHUB.COM/ADSEN17</a>
+                                <a href="https://linkedin.com/in/keiferr-17" target="_blank" class="hover-target hover:text-neonCyan transition-colors">LINKEDIN: KEIFERR-17</a>
+                            </div>
+                            
+                            <button type="submit" id="submit-btn" class="hover-target pointer-events-auto px-6 py-3 border border-neonCyan text-neonCyan text-[10px] md:text-xs uppercase tracking-[0.2em] hover:bg-neonCyan/20 hover:shadow-[0_0_15px_rgba(0,255,198,0.4)] transition-all bg-neonCyan/5 whitespace-nowrap">
+                                [ SEND_SIGNAL ]
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
