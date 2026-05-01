@@ -270,7 +270,7 @@
                     <!-- Terminal Log -->
                     <div class="archive-log font-mono text-[0.6rem] md:text-xs text-gray-400 bg-white/5 border border-white/10 p-4 rounded-sm inline-block opacity-0">
                         <div class="log-line">> Scanning deployed modules...</div>
-                        <div class="log-line text-neonCyan">> 4 systems detected</div>
+                        <div class="log-line text-neonCyan">> 5 systems detected</div>
                         <div class="log-line">> Archive status: <span class="text-hotPink animate-pulse">online</span></div>
                     </div>
                 </div>
@@ -379,8 +379,87 @@
                         </a>
                     </div>
 
-                    <!-- Project 1: Game -->
+                    <!-- Project 2: Shadow IT Tracker -->
                     <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-start relative z-10">
+                        <!-- Scanline -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-10 w-full animate-[scan_4s_ease-in-out_infinite_0.5s] opacity-50 pointer-events-none rounded-lg z-20"></div>
+                        
+                        <a href="https://shadow-it-tracker-sit.vercel.app/" target="_blank" rel="noopener noreferrer" class="work-link relative block w-full group overflow-hidden bg-[rgba(15,23,42,0.55)] backdrop-blur-xl border border-white/10 hover:border-goldAccent/50 transition-all duration-500 hover:shadow-[0_0_40px_rgba(255,209,102,0.15)] p-6 md:p-10 cursor-pointer rounded-lg">
+                            <!-- Glows -->
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-goldAccent/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/4 group-hover:bg-goldAccent/20 transition-colors duration-500"></div>
+                            <div class="absolute bottom-0 left-0 w-64 h-64 bg-hotPink/10 rounded-full blur-[80px] translate-y-1/2 -translate-x-1/4 group-hover:bg-hotPink/20 transition-colors duration-500"></div>
+                            
+                            <div class="flex flex-col relative z-10 w-full">
+                                <!-- Top Bar -->
+                                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 border-b border-white/10 pb-4">
+                                    <div class="system-label inline-block text-[0.6rem] md:text-[0.65rem] text-goldAccent tracking-[0.2em] uppercase font-bold px-3 py-1.5 border border-goldAccent/40 bg-transparent shadow-[0_0_10px_rgba(255,209,102,0.2)] group-hover:shadow-[0_0_15px_rgba(255,209,102,0.5)] group-hover:bg-goldAccent/10 transition-all duration-300">
+                                        [ B2B SAAS SYSTEM ]
+                                    </div>
+                                    <div class="archive-id font-mono text-[0.6rem] md:text-xs text-gray-500 tracking-widest uppercase">
+                                        SYS-005 // B2B
+                                    </div>
+                                </div>
+                                
+                                <!-- Content -->
+                                <h3 class="text-3xl md:text-5xl font-bold mb-2 group-hover:text-goldAccent transition-colors duration-300 relative inline-block group-hover:drop-shadow-[0_0_8px_rgba(255,209,102,0.5)]">
+                                    Shadow IT Tracker (SIT)
+                                </h3>
+                                <div class="text-goldAccent font-mono text-[0.65rem] md:text-sm tracking-widest mb-6 opacity-90 uppercase">"Secure access, software inventory, & smart offboarding."</div>
+
+                                <p class="font-thin text-sm md:text-base opacity-80 mb-8 max-w-3xl leading-relaxed">
+                                    Shadow IT Tracker adalah platform SaaS internal (B2B) yang dirancang untuk membantu tim IT dan HR melacak, mengelola, dan mengamankan penggunaan aplikasi pihak ketiga (SaaS) yang tidak terdaftar oleh karyawan (Shadow IT). Aplikasi ini berfokus pada keamanan akses, manajemen inventaris perangkat lunak, dan alur kerja offboarding yang aman dengan antarmuka Neubrutalism yang tegas.
+                                </p>
+
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                    <div>
+                                        <div class="text-hotPink text-[0.65rem] font-bold tracking-widest uppercase mb-4 border-b border-white/10 pb-2">CORE FEATURES</div>
+                                        <ul class="font-thin text-[0.75rem] md:text-sm opacity-80 space-y-3 list-disc pl-4 marker:text-goldAccent">
+                                            <li><strong class="text-white opacity-100">Role-Based Access Control:</strong> Keamanan berbasis cookie & RLS untuk Manager dan Admin.</li>
+                                            <li><strong class="text-white opacity-100">SaaS Inventory:</strong> Pusat kendali alat pihak ketiga, biaya, risiko, dan bulk delete.</li>
+                                            <li><strong class="text-white opacity-100">Smart Offboarding:</strong> Pencabutan akses otomatis dengan checklist interaktif.</li>
+                                            <li><strong class="text-white opacity-100">Immutable Audit Trail:</strong> Log aktivitas anti-ubah dengan Trigger database PostgreSQL.</li>
+                                            <li><strong class="text-white opacity-100">Analytics Dashboard:</strong> Metrik real-time ekosistem IT dan estimasi pengeluaran.</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <div class="text-hotPink text-[0.65rem] font-bold tracking-widest uppercase mb-4 border-b border-white/10 pb-2">TECH STACK</div>
+                                        <div class="flex flex-wrap gap-2 mb-6">
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Next.js</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">React</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">TypeScript</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Tailwind CSS</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Supabase</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">PostgreSQL</span>
+                                            <span class="px-2 py-1 text-[0.65rem] border border-white/20 bg-white/5 rounded-sm">Zod</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bottom Bar -->
+                                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 w-full mt-auto pt-6 border-t border-white/10">
+                                    <div class="flex flex-col gap-2 font-mono text-[0.6rem] md:text-xs text-gray-400">
+                                        <div class="flex gap-2"><span class="text-gray-600">HIGHLIGHT:</span> <span class="text-white max-w-sm">Neubrutalism UI & Fullstack Backend Architecture.</span></div>
+                                        <div class="status-label flex items-center gap-2 font-bold tracking-widest text-goldAccent drop-shadow-[0_0_5px_rgba(255,209,102,0.5)] mt-1">
+                                            <span class="text-gray-600 font-normal">STATUS:</span>
+                                            <span class="w-1.5 h-1.5 rounded-full bg-goldAccent shadow-[0_0_5px_#FFD166] glow-stable"></span>
+                                            DEPLOYED
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Button -->
+                                    <div class="flex gap-4 z-20">
+                                        <div class="open-system-btn flex items-center gap-3 text-xs tracking-widest uppercase font-bold text-bgDeep bg-goldAccent px-6 py-3 hover:bg-white transition-all duration-300 shadow-[0_0_15px_rgba(255,209,102,0.3)] hover:shadow-[0_0_25px_rgba(255,209,102,0.6)] rounded-sm">
+                                            <span>OPEN SYSTEM</span>
+                                            <svg class="w-4 h-4 transform group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Project 1: Game -->
+                    <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-end relative z-10">
                         <!-- Scanline -->
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-10 w-full animate-[scan_4s_ease-in-out_infinite] opacity-50 pointer-events-none rounded-lg z-20"></div>
                         
@@ -429,7 +508,7 @@
                     </div>
 
                     <!-- Project 2: Web -->
-                    <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-end relative z-10">
+                    <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-start relative z-10">
                         <!-- Scanline -->
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-10 w-full animate-[scan_4s_ease-in-out_infinite_1s] opacity-50 pointer-events-none rounded-lg z-20"></div>
                         
@@ -478,7 +557,7 @@
                     </div>
 
                     <!-- Project 3: Auratech -->
-                    <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-start relative z-10">
+                    <div class="archive-module opacity-0 translate-y-8 scale-95 md:w-[85%] md:self-end relative z-10">
                         <!-- Scanline -->
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-10 w-full animate-[scan_4s_ease-in-out_infinite_2s] opacity-50 pointer-events-none rounded-lg z-20"></div>
                         
