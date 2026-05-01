@@ -1158,6 +1158,7 @@
                             gridContainer.classList.remove('pointer-events-none', 'z-0');
                             gridContainer.classList.add('z-10');
                             
+                            gsap.set(gridContainer, { opacity: 1, scale: 1 });
                             renderGrid();
                         }});
                     } else {
