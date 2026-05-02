@@ -1414,10 +1414,17 @@
             const windowEl = document.getElementById('detail-window');
             const backdrop = document.getElementById('detail-backdrop');
             
-            // Hide Return To Hub while detail is open
+            // Sembunyikan tombol back-to-hub sepenuhnya (pointer-events & opacity)
+            // agar tidak tertabrak touch event saat detail window terbuka
             const backBtn = document.getElementById('back-to-hub');
-            if (backBtn) gsap.to(backBtn, { opacity: 0, duration: 0.2 });
+            if (backBtn) {
+                gsap.killTweensOf(backBtn);
+                gsap.to(backBtn, { opacity: 0, duration: 0.2, onComplete: () => {
+                    backBtn.style.pointerEvents = 'none';
+                }});
+            }
 
+            windowEl.style.pointerEvents = 'auto'; // pastikan bisa diinteraksi
             backdrop.classList.remove('pointer-events-none');
             gsap.to(backdrop, { opacity: 1, duration: 0.3 });
             gsap.to(windowEl, { x: 0, duration: 0.5, ease: 'power3.out' });
@@ -1427,15 +1434,21 @@
             const windowEl = document.getElementById('detail-window');
             const backdrop = document.getElementById('detail-backdrop');
             
-            // Restore Return To Hub
-            const backBtn = document.getElementById('back-to-hub');
-            if (backBtn && backBtn.style.display !== 'none') {
-                gsap.to(backBtn, { opacity: 1, duration: 0.3, delay: 0.3 });
-            }
+            // Disable pointer events pada detail window segera (sebelum animasi selesai)
+            // agar tidak mengintersept touch event saat slide keluar
+            windowEl.style.pointerEvents = 'none';
 
             gsap.to(windowEl, { x: '100%', duration: 0.4, ease: 'power3.in' });
             gsap.to(backdrop, { opacity: 0, duration: 0.3, onComplete: () => {
                 backdrop.classList.add('pointer-events-none');
+
+                // Kembalikan tombol back-to-hub HANYA setelah animasi tutup selesai
+                // agar tidak bisa diklik saat masih dalam proses menutup
+                const backBtn = document.getElementById('back-to-hub');
+                if (backBtn && backBtn.style.display !== 'none') {
+                    backBtn.style.pointerEvents = 'auto';
+                    gsap.to(backBtn, { opacity: 1, duration: 0.3 });
+                }
             }});
         }
 
