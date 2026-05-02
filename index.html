@@ -36,9 +36,20 @@
 
     <!-- Core Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Post-Processing Modules -->
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    
+    <!-- VanillaTilt -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
 
     <style>
         :root {
@@ -181,11 +192,54 @@
     <div class="glitch-layer" id="glitch-effect"></div>
 
     <!-- Boot Sequence -->
-    <div id="boot-screen" class="fixed inset-0 z-[9999] bg-bgBase flex flex-col justify-end p-8 md:p-16">
-        <div id="boot-text" class="text-neonCyan font-thin text-sm md:text-lg opacity-80 leading-relaxed max-w-2xl">
-            <span class="typing-line block"></span>
+    <div id="boot-screen" class="fixed inset-0 z-[9999] bg-bgBase overflow-hidden">
+        <!-- Scan Grid -->
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(0,255,198,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,198,0.04)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none" id="boot-grid"></div>
+        <!-- Horizontal scan line -->
+        <div class="absolute left-0 w-full h-[2px] bg-neonCyan/30 shadow-[0_0_15px_rgba(0,255,198,0.8)] pointer-events-none" id="boot-scanline" style="top:0"></div>
+        <!-- Corner decorations -->
+        <div class="absolute top-6 left-6 md:top-10 md:left-10">
+            <div class="text-[0.65rem] font-bold tracking-[0.3em] text-neonCyan opacity-60 uppercase">ADSEN // SYNERGY_OS</div>
+            <div class="text-[0.55rem] font-thin text-gray-500 tracking-widest mt-1">v3.14.2026 // KERNEL INIT</div>
+        </div>
+        <div class="absolute top-6 right-6 md:top-10 md:right-10 text-right">
+            <div class="text-[0.55rem] font-thin text-gray-600 tracking-widest uppercase" id="boot-time"></div>
+            <div class="text-[0.55rem] font-thin text-gray-600 tracking-widest mt-1">NODE: ONLINE</div>
+        </div>
+        <!-- ASCII Art Center -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.04]">
+            <pre class="font-mono text-neonCyan text-[0.35rem] sm:text-[0.5rem] md:text-[0.65rem] leading-tight text-center select-none">
+  █████╗ ██████╗ ███████╗███████╗███╗   ██╗
+ ██╔══██╗██╔══██╗██╔════╝██╔════╝████╗  ██║
+ ███████║██║  ██║███████╗█████╗  ██╔██╗ ██║
+ ██╔══██║██║  ██║╚════██║██╔══╝  ██║╚██╗██║
+ ██║  ██║██████╔╝███████║███████╗██║ ╚████║
+ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═══╝
+            </pre>
+        </div>
+        <!-- Progress bar at bottom -->
+        <div class="absolute bottom-0 left-0 w-full">
+            <div class="w-full h-[2px] bg-white/5">
+                <div class="h-full bg-gradient-to-r from-neonCyan via-electricViolet to-hotPink transition-all duration-300" id="boot-progress" style="width:0%"></div>
+            </div>
+        </div>
+        <!-- Boot text -->
+        <div class="absolute bottom-8 md:bottom-14 left-8 md:left-16 right-8 md:right-16">
+            <div id="boot-text" class="text-neonCyan font-thin text-xs md:text-sm opacity-80 leading-relaxed max-w-2xl">
+                <span class="typing-line block"></span>
+            </div>
+            <div class="mt-4 flex items-center gap-3">
+                <div class="flex gap-1" id="boot-dots">
+                    <span class="w-1.5 h-1.5 bg-neonCyan rounded-full animate-bounce" style="animation-delay:0ms"></span>
+                    <span class="w-1.5 h-1.5 bg-electricViolet rounded-full animate-bounce" style="animation-delay:150ms"></span>
+                    <span class="w-1.5 h-1.5 bg-hotPink rounded-full animate-bounce" style="animation-delay:300ms"></span>
+                </div>
+                <div class="text-[0.55rem] text-gray-500 tracking-widest uppercase" id="boot-percent">0%</div>
+            </div>
         </div>
     </div>
+    <!-- Wormhole Canvas Overlay -->
+    <canvas id="wormhole-canvas" class="fixed inset-0 z-[9990] pointer-events-none" style="opacity:0;"></canvas>
 
     <div id="canvas-container"></div>
 
@@ -224,29 +278,48 @@
 
         <!-- HALAMAN 2: ABOUT -->
         <section id="about" class="page-section pt-32 pb-32">
-            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
-                <div class="lg:col-span-5 glass-panel p-8 md:p-12 relative overflow-hidden group">
-                    <div class="text-xs tracking-widest text-neonCyan mb-8">SYS.REQ // CORE_IDENTITY</div>
-                    <h3 class="font-bold text-3xl md:text-5xl mb-6 leading-tight">Futuristic Systems<br>Developer.</h3>
-                    <p class="font-thin text-sm md:text-base opacity-70 leading-relaxed mb-8">
-                        I am a developer focused on creating systems rather than just applications.<br><br>My approach is rooted in thinking beyond immediate solutions—designing architectures that can evolve, adapt, and remain relevant in the future.<br><br>I believe technology should not only solve problems today, but also shape possibilities for tomorrow.
-                    </p>
-                    <div class="space-y-4 font-thin text-xs uppercase tracking-wider">
+            <div class="max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-auto">
+                <!-- Box 1: Core Identity (Large) -->
+                <div class="glass-panel p-8 md:p-10 relative overflow-hidden group md:col-span-2 lg:col-span-2 md:row-span-2 flex flex-col justify-between">
+                    <div>
+                        <div class="text-[0.65rem] tracking-widest text-neonCyan mb-6 uppercase">SYS.REQ // CORE_IDENTITY</div>
+                        <h3 class="font-bold text-3xl md:text-5xl mb-6 leading-tight">Futuristic Systems<br>Developer.</h3>
+                        <p class="font-thin text-sm opacity-70 leading-relaxed mb-8">
+                            I am a developer focused on creating systems rather than just applications. My approach is rooted in thinking beyond immediate solutions—designing architectures that can evolve, adapt, and remain relevant in the future.
+                        </p>
+                    </div>
+                    <div class="space-y-3 font-thin text-xs uppercase tracking-wider mt-auto pt-6 border-t border-white/10">
                         <div class="flex items-center gap-4"><span class="w-8 h-[1px] bg-electricViolet"></span> Think Long-Term</div>
                         <div class="flex items-center gap-4"><span class="w-8 h-[1px] bg-hotPink"></span> Build With Purpose</div>
                         <div class="flex items-center gap-4"><span class="w-8 h-[1px] bg-goldAccent"></span> Design For Impact</div>
                         <div class="flex items-center gap-4"><span class="w-8 h-[1px] bg-neonCyan"></span> Continuously Evolve</div>
                     </div>
                 </div>
-                <div class="lg:col-span-7 flex flex-col gap-8">
-                    <div class="glass-panel p-8">
-                        <div class="text-xs tracking-widest text-electricViolet mb-6">SYS.REQ // MODULES</div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 font-thin text-sm">
-                            <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors"><strong class="text-neonCyan">Web Architecture</strong><br>Designing scalable and structured backend systems.</div>
-                            <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors"><strong class="text-electricViolet">Interactive UI Systems</strong><br>Creating immersive and engaging user experiences.</div>
-                            <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors"><strong class="text-hotPink">Backend Engineering</strong><br>Building efficient and reliable server-side logic.</div>
-                            <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors"><strong class="text-goldAccent">AI & Future Tech</strong><br>Exploring intelligent systems and automation.</div>
-                        </div>
+
+                <!-- Box 2: Live Status (Medium) -->
+                <div class="glass-panel p-6 md:p-8 relative overflow-hidden group md:col-span-2 lg:col-span-2 flex flex-col justify-center items-center text-center">
+                    <div class="absolute inset-0 bg-neonCyan/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="w-full flex justify-between items-center mb-6">
+                        <div class="text-[0.6rem] tracking-widest text-gray-400 uppercase">System Status</div>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-neonCyan rounded-full animate-pulse"></span> <span class="text-[0.6rem] text-neonCyan tracking-widest">ONLINE</span></div>
+                    </div>
+                    
+                    <div class="w-32 h-32 rounded-full border border-white/10 relative flex items-center justify-center mb-4 group-hover:border-neonCyan/50 transition-colors">
+                        <div class="absolute inset-2 rounded-full border border-dashed border-white/20 animate-[spin_10s_linear_infinite]"></div>
+                        <div class="absolute inset-4 rounded-full border border-dotted border-neonCyan/30 animate-[spin_15s_linear_infinite_reverse]"></div>
+                        <div class="text-3xl font-bold text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">99<span class="text-lg text-neonCyan">%</span></div>
+                    </div>
+                    <div class="text-[0.65rem] text-gray-400 tracking-[0.2em] uppercase">SYSTEM OPTIMAL // SYNERGY ACHIEVED</div>
+                </div>
+
+                <!-- Box 3: Modules (Wide) -->
+                <div class="glass-panel p-6 md:p-8 relative overflow-hidden group md:col-span-2 lg:col-span-2">
+                    <div class="text-[0.65rem] tracking-widest text-electricViolet mb-6 uppercase">SYS.REQ // MODULES</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 font-thin text-[0.7rem] leading-relaxed">
+                        <div class="p-4 border border-white/10 hover:border-neonCyan transition-colors bg-white/5"><strong class="text-neonCyan block mb-1">Web Architecture</strong>Designing scalable and structured systems.</div>
+                        <div class="p-4 border border-white/10 hover:border-electricViolet transition-colors bg-white/5"><strong class="text-electricViolet block mb-1">Interactive UI</strong>Creating immersive user experiences.</div>
+                        <div class="p-4 border border-white/10 hover:border-hotPink transition-colors bg-white/5"><strong class="text-hotPink block mb-1">Backend Engineering</strong>Building efficient server-side logic.</div>
+                        <div class="p-4 border border-white/10 hover:border-goldAccent transition-colors bg-white/5"><strong class="text-goldAccent block mb-1">AI & Future Tech</strong>Exploring intelligent systems.</div>
                     </div>
                 </div>
             </div>
@@ -270,7 +343,7 @@
                     <!-- Terminal Log -->
                     <div class="archive-log font-mono text-[0.6rem] md:text-xs text-gray-400 bg-white/5 border border-white/10 p-4 rounded-sm inline-block opacity-0">
                         <div class="log-line">> Scanning deployed modules...</div>
-                        <div class="log-line text-neonCyan">> 5 systems detected</div>
+                        <div class="log-line text-neonCyan">> 6 systems detected</div>
                         <div class="log-line">> Archive status: <span class="text-hotPink animate-pulse">online</span></div>
                     </div>
                 </div>
@@ -471,33 +544,211 @@
     </main>
 
     <script>
-        // --- 1. BOOT SEQUENCE ---
+        // --- 1. BOOT SEQUENCE (ENHANCED) ---
         const bootText = [
-            "Initializing Synergy OS...",
-            "Loading Neural Archive...",
-            "Bypassing Standard UI Protocols...",
-            "Access Granted."
+            "Initializing Synergy OS v3.14.2026...",
+            "Mapping neural pathway architecture...",
+            "Decrypting archive modules [6/6]...",
+            "Calibrating spatial rendering engine...",
+            "Bypassing standard UI protocols...",
+            "Access Granted. Welcome, Observer."
         ];
         let bootIndex = 0;
         
+        // Boot clock
+        function updateBootTime() {
+            const el = document.getElementById('boot-time');
+            if (el) el.textContent = new Date().toLocaleTimeString('en-US', {hour12: false}) + ' // WIB';
+        }
+        setInterval(updateBootTime, 1000);
+        updateBootTime();
+
+        // Scanline animation
+        function animateScanline() {
+            const sl = document.getElementById('boot-scanline');
+            if (!sl) return;
+            let pos = 0;
+            const h = window.innerHeight;
+            const move = () => {
+                pos = (pos + 3) % h;
+                sl.style.top = pos + 'px';
+                if (document.getElementById('boot-screen') && document.getElementById('boot-screen').style.display !== 'none') {
+                    requestAnimationFrame(move);
+                }
+            };
+            requestAnimationFrame(move);
+        }
+        animateScanline();
+
         function runBoot() {
+            const progress = Math.round(((bootIndex + 1) / bootText.length) * 100);
+            const progressBar = document.getElementById('boot-progress');
+            const progressPct = document.getElementById('boot-percent');
+            if (progressBar) progressBar.style.width = progress + '%';
+            if (progressPct) progressPct.textContent = progress + '%';
+
             if(bootIndex < bootText.length) {
-                document.querySelector('.typing-line').innerHTML += `<div>> ${bootText[bootIndex]}</div>`;
+                document.querySelector('.typing-line').innerHTML += `<div class="${bootIndex === bootText.length - 1 ? 'text-neonCyan font-bold' : 'text-gray-400'}">> ${bootText[bootIndex]}</div>`;
                 bootIndex++;
-                setTimeout(runBoot, Math.random() * 300 + 200);
+                setTimeout(runBoot, Math.random() * 250 + 150);
             } else {
                 setTimeout(() => {
-                    gsap.to('#boot-screen', {opacity: 0, duration: 1, onComplete: () => {
+                    gsap.to('#boot-screen', {opacity: 0, duration: 1, ease: 'power2.in', onComplete: () => {
                         document.getElementById('boot-screen').style.display = 'none';
                         initApp();
                     }});
-                }, 500);
+                }, 600);
             }
         }
         window.onload = () => setTimeout(runBoot, 300);
 
+        // --- WORMHOLE ENGINE (FIXED) ---
+        const wormholeCanvas = document.getElementById('wormhole-canvas');
+        const wCtx = wormholeCanvas ? wormholeCanvas.getContext('2d') : null;
+        let wormholeActive = false;
+        let wormholeRAF = null;
+
+        function resetWormhole() {
+            wormholeActive = false;
+            if (wormholeCanvas) {
+                wormholeCanvas.style.opacity = '0';
+                wormholeCanvas.style.pointerEvents = 'none';
+            }
+            if (wCtx && wormholeCanvas) {
+                wCtx.clearRect(0, 0, wormholeCanvas.width, wormholeCanvas.height);
+            }
+        }
+
+        function resizeWormhole() {
+            if (wormholeCanvas) {
+                wormholeCanvas.width = window.innerWidth;
+                wormholeCanvas.height = window.innerHeight;
+            }
+        }
+        resizeWormhole();
+        window.addEventListener('resize', resizeWormhole);
+
+        function playWormhole(callback) {
+            // Safety: if already active, skip animation and just run callback
+            if (wormholeActive) {
+                if (callback) callback();
+                return;
+            }
+            if (!wCtx) {
+                if (callback) callback();
+                return;
+            }
+
+            wormholeActive = true;
+            wormholeCanvas.style.opacity = '1';
+            wormholeCanvas.style.pointerEvents = 'none'; // NEVER block clicks
+
+            // Safety reset after max duration
+            const safetyTimer = setTimeout(resetWormhole, 2000);
+
+            const cx = window.innerWidth / 2;
+            const cy = window.innerHeight / 2;
+            const maxR = Math.hypot(cx, cy) * 1.5;
+            const particles = [];
+            const PARTICLE_COUNT = 180;
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const dist = Math.random() * maxR * 0.15 + 15;
+                particles.push({
+                    angle, dist,
+                    speed: Math.random() * 7 + 3,
+                    size: Math.random() * 2 + 0.5,
+                    color: `hsl(${[168, 270, 340][Math.floor(Math.random()*3)]}, 100%, 60%)`
+                });
+            }
+
+            let frame = 0;
+            const totalFrames = 50;
+            let callbackFired = false;
+
+            function drawFrame() {
+                if (!wormholeActive) return;
+                wCtx.clearRect(0, 0, wormholeCanvas.width, wormholeCanvas.height);
+                const t = frame / totalFrames;
+
+                // Vignette from center
+                const grad = wCtx.createRadialGradient(cx, cy, 0, cx, cy, maxR * (0.05 + t * 1.5));
+                grad.addColorStop(0, `rgba(0,0,0,${Math.min(1, t * 2.2)})`);
+                grad.addColorStop(0.7, `rgba(0,0,0,${Math.min(1, t * 1.2)})`);
+                grad.addColorStop(1, 'rgba(0,0,0,0)');
+                wCtx.fillStyle = grad;
+                wCtx.fillRect(0, 0, wormholeCanvas.width, wormholeCanvas.height);
+
+                // Expanding ring glow
+                const ringR = maxR * t * 1.1;
+                if (ringR > 0) {
+                    const ringGrad = wCtx.createRadialGradient(cx, cy, Math.max(0, ringR-25), cx, cy, ringR + 25);
+                    ringGrad.addColorStop(0, 'rgba(0,255,198,0)');
+                    ringGrad.addColorStop(0.5, `rgba(0,255,198,${0.5 * (1 - t)})`);
+                    ringGrad.addColorStop(1, 'rgba(0,255,198,0)');
+                    wCtx.strokeStyle = ringGrad;
+                    wCtx.lineWidth = 2;
+                    wCtx.beginPath();
+                    wCtx.arc(cx, cy, ringR, 0, Math.PI * 2);
+                    wCtx.stroke();
+                }
+
+                // Speed line particles
+                particles.forEach(p => {
+                    p.dist += p.speed * (1 + t * 5);
+                    const trail = p.speed * (1 + t * 5) * 3;
+                    const alpha = (1 - t) * 0.85;
+                    wCtx.strokeStyle = p.color;
+                    wCtx.lineWidth = p.size;
+                    wCtx.globalAlpha = alpha;
+                    wCtx.beginPath();
+                    wCtx.moveTo(
+                        cx + Math.cos(p.angle) * (p.dist - trail),
+                        cy + Math.sin(p.angle) * (p.dist - trail)
+                    );
+                    wCtx.lineTo(
+                        cx + Math.cos(p.angle) * p.dist,
+                        cy + Math.sin(p.angle) * p.dist
+                    );
+                    wCtx.stroke();
+                    wCtx.globalAlpha = 1;
+                });
+
+                // Fire callback at 50% of animation
+                if (frame >= Math.floor(totalFrames * 0.5) && !callbackFired) {
+                    callbackFired = true;
+                    if (callback) callback();
+                }
+
+                frame++;
+                if (frame < totalFrames) {
+                    wormholeRAF = requestAnimationFrame(drawFrame);
+                } else {
+                    clearTimeout(safetyTimer);
+                    resetWormhole();
+                }
+            }
+            wormholeRAF = requestAnimationFrame(drawFrame);
+        }
+
+        // --- EVENT DELEGATION (one listener, no duplicates) ---
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a[href^="#"]');
+            if (!link) return;
+            const href = link.getAttribute('href');
+            if (!href) return;
+            const targetHash = href.replace('#', '');
+            if (!routes || !routes.includes(targetHash)) return;
+            const currentHash = window.location.hash.replace('#', '') || 'hub';
+            if (targetHash === currentHash) return;
+            e.preventDefault();
+            playWormhole(() => {
+                window.location.hash = href;
+            });
+        }, true); // capture phase
+
         // --- 2. THREE.JS ENGINE ---
-        let scene, camera, renderer, particlesMesh;
+        let scene, camera, renderer, particlesMesh, composer, bloomPass;
         let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
         let baseCamera = { x: 0, z: 15 };
         
@@ -511,6 +762,17 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            // Post-Processing
+            const renderScene = new THREE.RenderPass(scene, camera);
+            bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+            bloomPass.threshold = 0;
+            bloomPass.strength = 1.2;
+            bloomPass.radius = 0.5;
+
+            composer = new THREE.EffectComposer(renderer);
+            composer.addPass(renderScene);
+            composer.addPass(bloomPass);
 
             const isMobile = window.innerWidth < 768;
             const particleCount = isMobile ? 600 : 2000;
@@ -527,6 +789,7 @@
                 camera.aspect = window.innerWidth/window.innerHeight;
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
+                if (composer) composer.setSize(window.innerWidth, window.innerHeight);
                 buildNavNodes();
                 let hash = window.location.hash.replace('#', '') || 'hub';
                 document.querySelectorAll('.nav-node').forEach(n => {
@@ -549,7 +812,11 @@
             camera.position.z = baseCamera.z;
             
             camera.lookAt(scene.position);
-            renderer.render(scene, camera);
+            if (composer) {
+                composer.render();
+            } else {
+                renderer.render(scene, camera);
+            }
         }
 
         // --- 3. ROUTING LOGIC ---
@@ -684,8 +951,17 @@
         }
 
         const sounds = {
-            type: () => playTone(800, 'sine', 0.05, 0.02),
+            type:   () => playTone(800, 'sine', 0.05, 0.02),
             submit: () => playTone(150, 'square', 0.2, 0.05),
+            // Hover: short high-pitched click, very subtle
+            hover: () => {
+                playTone(1200, 'sine', 0.06, 0.012);
+            },
+            // Click: crisp digital thud
+            click: () => {
+                playTone(440, 'square', 0.04, 0.03);
+                setTimeout(() => playTone(880, 'sine', 0.08, 0.018), 30);
+            },
             success: () => {
                 playTone(400, 'sine', 0.1, 0.05);
                 setTimeout(() => playTone(600, 'sine', 0.2, 0.05), 100);
@@ -828,6 +1104,30 @@
             });
         }
 
+        // --- GLOBAL INTERACTIVE SOUNDS (event delegation, no duplicates) ---
+        const CLICKABLE = 'a, button, [role="button"], input[type="submit"], .hover-target, .filter-btn, .view-btn, .mode-btn, .nav-node';
+
+        // Hover sound via mouseover delegation
+        let lastHoveredEl = null;
+        document.addEventListener('mouseover', function(e) {
+            const el = e.target.closest(CLICKABLE);
+            if (!el || el === lastHoveredEl) return;
+            lastHoveredEl = el;
+            if (typeof sounds !== 'undefined') sounds.hover();
+        });
+        document.addEventListener('mouseout', function(e) {
+            const el = e.target.closest(CLICKABLE);
+            if (el && e.target === el) lastHoveredEl = null;
+        });
+
+        // Click sound via click delegation (skip sound-toggle to avoid loop)
+        document.addEventListener('click', function(e) {
+            const el = e.target.closest(CLICKABLE);
+            if (!el) return;
+            if (el.id === 'sound-toggle') return; // don't double-trigger
+            if (typeof sounds !== 'undefined') sounds.click();
+        });
+
         document.querySelectorAll('.mode-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 // Hapus efek aktif dari semua tombol
@@ -886,7 +1186,16 @@
                 status: "IN DEVELOPMENT", statusColor: "text-hotPink", glow: "neonCyan", link: "https://orbitflow-teal.vercel.app/", isFeatured: true
             },
             {
-                id: "SYS-002", category: "SAAS", tag: "[ B2B SAAS SYSTEM ]", title: "Shadow IT Tracker (SIT)",
+                id: "SYS-002", category: "WEB", tag: "[ API & DASHBOARD ]", title: "TipLite — Micro-Donation API",
+                shortDesc: '"Real-time micro-donation platform & API."',
+                description: "TipLite adalah sistem Micro-Donation dengan arsitektur modern yang memisahkan Frontend (Next.js 15) dan Backend (NestJS). Sistem ini dilengkapi dengan database PostgreSQL, autentikasi mandiri, dan Webhook real-time untuk integrasi streaming (seperti OBS), memberikan pengalaman kreator yang estetik dengan tema 'Warm Creator'.",
+                features: ["Real-time Dashboard: Statistik donasi dan riwayat transaksi live dari database.", "API & Webhook: Generate Public/Secret Key dan antrian webhook via Redis & BullMQ.", "Self-Auth System: Autentikasi JWT & Bcrypt dengan penanganan Unauthorized global.", "Idempotency & Fees: Mencegah double charging dan kalkulasi platform fee otomatis.", "Payment Ready: Terintegrasi dengan Xendit QRIS API."],
+                tech: ["Next.js 15", "Tailwind CSS", "NestJS", "PostgreSQL", "Prisma", "Redis", "Xendit"],
+                highlight: "Enterprise-grade Backend & Real-time Microservices.",
+                status: "DEPLOYED", statusColor: "text-neonCyan", glow: "neonCyan", link: "#", isFeatured: false
+            },
+            {
+                id: "SYS-003", category: "SAAS", tag: "[ B2B SAAS SYSTEM ]", title: "Shadow IT Tracker (SIT)",
                 shortDesc: '"Secure access, software inventory, & smart offboarding."',
                 description: "Shadow IT Tracker adalah platform SaaS internal (B2B) yang dirancang untuk membantu tim IT dan HR melacak, mengelola, dan mengamankan penggunaan aplikasi pihak ketiga (SaaS) yang tidak terdaftar oleh karyawan (Shadow IT). Aplikasi ini berfokus pada keamanan akses, manajemen inventaris perangkat lunak, dan alur kerja offboarding yang aman dengan antarmuka Neubrutalism yang tegas.",
                 features: ["Role-Based Access Control: Keamanan berbasis cookie & RLS untuk Manager dan Admin.", "SaaS Inventory: Pusat kendali alat pihak ketiga, biaya, risiko, dan bulk delete.", "Smart Offboarding: Pencabutan akses otomatis dengan checklist interaktif.", "Immutable Audit Trail: Log aktivitas anti-ubah dengan Trigger database PostgreSQL.", "Analytics Dashboard: Metrik real-time ekosistem IT dan estimasi pengeluaran."],
@@ -895,7 +1204,7 @@
                 status: "DEPLOYED", statusColor: "text-goldAccent", glow: "goldAccent", link: "https://shadow-it-tracker-sit.vercel.app/", isFeatured: false
             },
             {
-                id: "SYS-003", category: "GAME", tag: "[ GAME SYSTEM ]", title: "Pirate Platformer Adventure",
+                id: "SYS-004", category: "GAME", tag: "[ GAME SYSTEM ]", title: "Pirate Platformer Adventure",
                 shortDesc: "A pirate-themed platformer adventure game.",
                 description: "A pirate-themed platformer adventure game built to explore gameplay mechanics, level design, movement systems, and interactive player experience.",
                 features: ["Platformer Mechanics", "Level Design", "Interactive Gameplay"],
@@ -904,7 +1213,7 @@
                 status: "DEPLOYED", statusColor: "text-electricViolet", glow: "hotPink", link: "https://keiferr.itch.io/pirate-platformer-adventure", isFeatured: false
             },
             {
-                id: "SYS-004", category: "WEB", tag: "[ WEB SYSTEM ]", title: "Personal Portfolio Website",
+                id: "SYS-005", category: "WEB", tag: "[ WEB SYSTEM ]", title: "Personal Portfolio Website",
                 shortDesc: "A personal portfolio website.",
                 description: "A personal portfolio website designed to showcase digital identity, creative direction, projects, and development skills through a responsive web experience.",
                 features: ["Cyberpunk Aesthetics", "3D Canvas Integration", "GSAP Animations", "Responsive Design"],
@@ -913,7 +1222,7 @@
                 status: "ACTIVE", statusColor: "text-neonCyan", glow: "neonCyan", link: "https://adsen17.github.io/portfolio-keifer/", isFeatured: false
             },
             {
-                id: "SYS-005", category: "WEB", tag: "[ WEB SYSTEM ]", title: "Auratech — Digital Vibe Check",
+                id: "SYS-006", category: "WEB", tag: "[ WEB SYSTEM ]", title: "Auratech — Digital Vibe Check",
                 shortDesc: "A futuristic interactive web experience.",
                 description: "A futuristic interactive web experience designed as a digital aura scan system, combining cyberpunk visuals, terminal-style UI, system warnings, and immersive interface effects.",
                 features: ["Interactive Quiz", "Terminal UI", "Audio Integration", "Glitch Effects"],
@@ -985,6 +1294,16 @@
                 gsap.fromTo(card, { opacity: 0, scale: 0.9, y: 20 }, { opacity: 1, scale: 1, y: 0, duration: 0.5, delay: delay, ease: 'power2.out' });
                 
                 gridContainer.appendChild(card);
+                
+                // Initialize VanillaTilt
+                if (typeof VanillaTilt !== 'undefined') {
+                    VanillaTilt.init(card, {
+                        max: 15,
+                        speed: 400,
+                        glare: true,
+                        "max-glare": 0.2
+                    });
+                }
             });
         }
 
@@ -1095,6 +1414,10 @@
             const windowEl = document.getElementById('detail-window');
             const backdrop = document.getElementById('detail-backdrop');
             
+            // Hide Return To Hub while detail is open
+            const backBtn = document.getElementById('back-to-hub');
+            if (backBtn) gsap.to(backBtn, { opacity: 0, duration: 0.2 });
+
             backdrop.classList.remove('pointer-events-none');
             gsap.to(backdrop, { opacity: 1, duration: 0.3 });
             gsap.to(windowEl, { x: 0, duration: 0.5, ease: 'power3.out' });
@@ -1104,6 +1427,12 @@
             const windowEl = document.getElementById('detail-window');
             const backdrop = document.getElementById('detail-backdrop');
             
+            // Restore Return To Hub
+            const backBtn = document.getElementById('back-to-hub');
+            if (backBtn && backBtn.style.display !== 'none') {
+                gsap.to(backBtn, { opacity: 1, duration: 0.3, delay: 0.3 });
+            }
+
             gsap.to(windowEl, { x: '100%', duration: 0.4, ease: 'power3.in' });
             gsap.to(backdrop, { opacity: 0, duration: 0.3, onComplete: () => {
                 backdrop.classList.add('pointer-events-none');
